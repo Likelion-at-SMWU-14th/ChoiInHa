@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Memo Detail</title>
+</head>
+<body>
+    <h1>{{ memo.title }}</h1>
+
+    <p>{{ memo.content }}</p>
+
+    <p>작성일: {{ memo.created_at }}</p>
+
+    <a href="{% url 'memo:memo_list' %}">목록으로 돌아가기</a>
+</body>
+</html>
