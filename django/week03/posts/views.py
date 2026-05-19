@@ -111,7 +111,4 @@ class class_view2(ListView):
     template_name = 'cbv_view.html'
 
 def home_view(request):
-    context = {
-        "name": "lion",
-    }
-    return render(request, 'home.html', context)
+    return render(request, 'home.html')
