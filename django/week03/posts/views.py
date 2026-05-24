@@ -1,11 +1,65 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.views import View
-from .models import Post
+from .models import Post, Comment
 from django.views.generic import ListView   
-from .forms import PostBasedForm, PostModelForm
+from .forms import PostBasedForm, PostModelForm, CommentForm
 
 # Create your views here.
+
+
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    comments = Comment.objects.filter(post=post).order_by('-created_at')
+
+    comment_form = CommentForm()
+
+    return render(request, 'posts/post_detail.html', {
+        'post': post,
+        'comments': comments,
+        'comment_form': comment_form,
+    })
+
+
+def comment_create(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.writer = request.user
+
+            comment.save()
+            return redirect('posts:post_detail', post_id=post.id)
+
+    return redirect('posts:post_detail', post_id=post.id)
+
+def comment_update(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    post = comment.post
+
+    if comment.writer != request.user:
+        return redirect('posts:post_detail', post_id=post.id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+
+        if form.is_valid():
+            form.save()
+            return redirect('posts:post_detail', post_id=post.id)
+
+    else:
+        form = CommentForm(instance=comment)
+
+    return render(request, 'comment_form.html', {
+        'form': form,
+        'comment': comment,
+        'post': post,
+    })
+
 
 def post_delete_view(request, id):
     post = get_object_or_404(Post, id=id)
@@ -32,7 +86,9 @@ def post_update_view(request, id):
 
 def post_detail_view(request, id):
     post = Post.objects.get(id=id)
-    context = {'post': post}
+    comments = Comment.objects.filter(post=post).order_by('-created_at')
+    comment_form = CommentForm()
+    context = {'post': post, 'comments': comments,'comment_form': comment_form,}
     return render(request, 'post_detail.html', context)
 
 def post_model_form_view(request):

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List View</title>
+</head>
+<body>
+    <h1>댓글 수정</h1>
+
+    <form method="post">
+    {% csrf_token %}
+     {{ form.as_p }}
+     <button type="submit"> 수정 완료 </button>
+    </form>
+
+    <a href="{% url 'posts:post_detail' post.id %}">게시글로 돌아가기</a>
+    
+</body>
+</html>
