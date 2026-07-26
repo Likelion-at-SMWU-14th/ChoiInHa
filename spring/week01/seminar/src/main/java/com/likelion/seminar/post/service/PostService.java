@@ -16,4 +16,12 @@ public class PostService {
     public void createPost(postDTO postDTO) {
         this.postDTOList.add(postDTO);
     }
+
+    public List<postDTO> getPosts() {
+        return this.postDTOList;
+    }
+
+    public postDTO getPostById(int id) {
+        return this.postDTOList.get(id);
+    }
 }
