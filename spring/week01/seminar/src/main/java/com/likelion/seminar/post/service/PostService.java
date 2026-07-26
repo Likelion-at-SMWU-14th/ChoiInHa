@@ -1,0 +1,45 @@
+package com.likelion.seminar.post.service;
+
+
+import com.likelion.seminar.post.dto.postDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class PostService {
+    private final List<postDTO> postDTOList;
+
+    public void createPost(postDTO postDTO) {
+        this.postDTOList.add(postDTO);
+    }
+
+    public List<postDTO> getPosts() {
+        return this.postDTOList;
+    }
+
+    public postDTO getPostById(int id) {
+        return this.postDTOList.get(id);
+    }
+
+    public void updatePost(int id, postDTO postDTO) {
+        postDTO targetPost = this.postDTOList.get(id);
+        if (postDTO.getTitle() != null) {
+            targetPost.setTitle(postDTO.getTitle());
+        }
+        if (postDTO.getContent() != null) {
+            targetPost.setContent(postDTO.getContent());
+        }
+        if (postDTO.getWriter() != null) {
+            targetPost.setWriter(postDTO.getWriter());
+        }
+
+    }
+
+    public void deletePost(int id) {
+        this.postDTOList.remove(id);
+    }
+}
