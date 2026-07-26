@@ -28,7 +28,7 @@ public class PostController {
 
     // 게시글 단일 조회 - /post/1
     @GetMapping("/{id}")
-    public postDTO getPostByPathVariable (@PathVariable("id") int id) {
+    public postDTO getPostByPathVariable (@PathVariable("id") int id, @RequestBody postDTO postDTO) {
         return postService.getPostById(id);
     }
 
@@ -36,5 +36,11 @@ public class PostController {
     @GetMapping("/param")
     public postDTO getPostByRequestParam(@RequestParam("id") int id)  {
         return postService.getPostById(id);
+    }
+
+    //게시글 수정
+    @PutMapping("/{id}")
+    public void updatePost(@PathVariable("id") int id, @RequestBody postDTO postDTO) {
+        postService.updatePost(id, postDTO);
     }
 }
