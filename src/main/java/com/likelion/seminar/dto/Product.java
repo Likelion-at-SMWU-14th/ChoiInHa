@@ -1,4 +1,4 @@
-package com.likelion.seminar.model;
+package com.likelion.seminar.dto;
 
 
 import lombok.AllArgsConstructor;

@@ -1,32 +1,29 @@
 package com.likelion.seminar.controller;
 
-import com.likelion.seminar.model.Product;
+import com.likelion.seminar.dto.Product;
 import com.likelion.seminar.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
-@Controller
+@RestController
+@RequestMapping("/api/products")
+@RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
 
-    public ProductController(ProductService productService) { this.productService = productService; }
-
-    @GetMapping("/products")
-    public String viewProducts(Model page) {
-        var products = productService.findAll();
-        page.addAttribute("products", products);
-        return "products";
+    @GetMapping
+    public List<Product> getProducts() {
+        return productService.findAll();
     }
-    @PostMapping("/products")
-    public String addProduct(Product product, Model page) {
-        productService.addProduct(product);
 
-        var products = productService.findAll();
-        page.addAttribute("products", products);
-        return "redirect:/products";
+    @PostMapping
+    public Product createProduct(@RequestBody Product product) {
+        return productService.addProduct(product);
     }
 }
