@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.PostMapping;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +23,13 @@ public class Board {
 
     @OneToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "board"
-
+            mappedBy = "board",
+            cascade = CascadeType.REMOVE,
+            orphanRemoval = true
     )
     private List<Post> posts = new ArrayList<>();
 
-    private Board(String name){
+    public Board(String name) {
         this.name = name;
     }
 }
