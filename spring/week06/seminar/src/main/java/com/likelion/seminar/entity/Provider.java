@@ -25,8 +25,12 @@ public class Provider extends BaseEntity {
         this.name = name;
     }
 
-    @OneToMany(mappedBy = "provider")
+    @OneToMany(mappedBy = "provider", cascade = CascadeType.PERSIST)
     @ToString.Exclude
     private List<Product> Products = new ArrayList<>();
 
+    public void addProduct(Product product) {
+        Products.add(product);
+        product.setProvider(this);
+    }
 }
