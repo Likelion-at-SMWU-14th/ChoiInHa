@@ -28,6 +28,11 @@ public class Board extends BaseEntity {
 
     private String state;
 
+    // Board 1 : N Post
+    // 연관관계의 주인은 Post.board
+    @OneToMany(mappedBy = "board")
+    private List<Post> posts = new ArrayList<>();
+
     public Board(String name, String state) {
         this.name = name;
         this.state = state;

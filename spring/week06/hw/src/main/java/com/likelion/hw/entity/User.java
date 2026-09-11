@@ -1,13 +1,13 @@
 package com.likelion.hw.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.UuidGenerator;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,6 +23,11 @@ public class User extends BaseEntity {
 
     private String name;
     private String state;
+
+    // User 1 : N Post
+    // 연관관계의 주인은 Post.user
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
 
     public User(String name, String state) {
         this.name = name;
