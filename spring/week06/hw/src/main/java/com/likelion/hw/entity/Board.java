@@ -33,6 +33,9 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board")
     private List<Post> posts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "board")
+    private List<Comment> comments = new ArrayList<>();
+
     public Board(String name, String state) {
         this.name = name;
         this.state = state;
