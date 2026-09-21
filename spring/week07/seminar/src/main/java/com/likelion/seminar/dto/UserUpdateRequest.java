@@ -1,10 +1,14 @@
 package com.likelion.seminar.dto;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
-public class UserSaveRequest {
+public class UserUpdateRequest {
 
     @NotBlank(message = "이름 필수")
     @Size(max = 20, message = "이름 20자 이하")
@@ -21,5 +25,4 @@ public class UserSaveRequest {
     @NotNull(message = "나이 필수")
     @Min(value = 0, message = "나이 0 이상")
     private Integer age;
-
 }

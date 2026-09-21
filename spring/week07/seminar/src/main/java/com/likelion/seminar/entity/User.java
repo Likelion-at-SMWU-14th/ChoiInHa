@@ -37,4 +37,11 @@ public class User {
         this.age = age;
     }
 
+    public void update(String name, String email, String password, Integer age) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.age = age;
+    }
+
 }
